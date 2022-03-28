@@ -1,0 +1,41 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <h1 style='text-align:center; padding:40px;'>İletişim</h1>
+
+    {% include 'partials/_messages.html' %}
+
+
+
+    <form method='POST'>
+
+        {% csrf_token %}
+        {% for field in form %}
+
+            <div class="form-group" style='margin:10px 50px ;'>
+                {{field}}
+            </div>
+
+            {% if field.errors %}
+
+                {% for error in field.errors %}
+
+                    <p style='color:red;'>{{error}}</p>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endfor %}
+
+            <div style='text-align:center;'>
+                <input style='padding:20px 100px;'  type="submit" value='Mesajı Gönder' class="btn btn-success">    
+            </div>
+        
+
+    </form>
+</div>
+{% endblock content %}

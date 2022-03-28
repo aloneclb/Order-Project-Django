@@ -1,0 +1,10 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+<h1 style='text-align:center; padding:40px;'>{{aboutus.title}}</h1>
+<p>{{aboutus.description|safe}}</p>
+</div>
+{% endblock content %}

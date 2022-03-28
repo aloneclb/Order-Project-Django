@@ -1,0 +1,90 @@
+{% extends 'partials/_base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <h3 style='text-align:center; padding-top:20px;'>Ürünler</h3>
+
+    <div class="row">
+        <div class="col-2">
+            <div class="d-flex flex-column bd-highlight mb-3">
+                <div class="p-2 bd-highlight"><a style='text-decoration:none;'
+                        href="{% url 'product:product_list'%}">Tüm Ürünler ></a></div>
+
+                {% for category in categories %}
+                <div class="p-2 bd-highlight"><a style='text-decoration:none;'
+                        href="{% url 'product:category_list' category.slug %}">{{category.title}} ></a></div>
+                {% endfor %}
+                <hr>
+                <div class="p-2 bd-highlight">
+                    <p>Filtreler</p>
+                </div>
+
+                <form class="p-2 bd-highlight" method='GET' action="{% url 'product:product_filter' %}">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="gndr" value="0" id="male">
+                        <label class="form-check-label" for="male">
+                            Erkek
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="gndr" value="1" id="female">
+                        <label class="form-check-label" for="female">
+                            Kadın
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="gndr" value="2" id="unisex">
+                        <label class="form-check-label" for="unisex">
+                            Unisex
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="gndr" value="3" id="child">
+                        <label class="form-check-label" for="child">
+                            Child
+                        </label>
+                    </div>
+                    <hr>
+                    <button class="btn btn-primary">Filtrele</button>
+
+                </form>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-10">
+            {% if search_data %}
+            <h5>'{{search_data}}' Araması Sonuçları</h5>
+            {% endif %}
+            <div class="row">
+                {% for product in products %}
+                <div class="col-3" style='padding-top:12px;'>
+                    <div class="card shadow-sm">
+                        <img src="{{product.front_image.url}}" alt="Resim Bulunamadı" class='img-fluid'>
+
+                        <div class="card-body">
+                            <p class="card-text"><a style='text-decoration:none;'
+                                    href="{% url 'product:product_detail' product.slug product.barcode %}"><b>{{product.brand}}</b>-{{product.title}}</a>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Sepete Ekle</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </div>
+                                <small class="text-muted">İndirimde</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

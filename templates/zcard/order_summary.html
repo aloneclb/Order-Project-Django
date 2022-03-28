@@ -1,0 +1,63 @@
+{% extends "partials/_base.html" %}
+
+{% block content %}
+<main>
+    <div class="container">
+        {% include 'partials/_messages.html' %}
+        <div class="table-responsive text-nowrap">
+            <h2 style='text-align:center; padding:40px;'>Sepet</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Ürün Adı</th>
+                        <th scope="col">Fiyatı</th>
+                        <th scope="col">Miktarı</th>
+                        <th scope="col">Ürünü Boşalt</th>
+                        <th scope="col">Toplam Tutar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order_item in object.items.all %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><b>{{ order_item.item.brand }}</b> {{ order_item.item.title }}</td>
+                        <td><del><small>{{ order_item.item.price }}</small></del>-
+                            <b>{{ order_item.item.discount_price }} TL</b></td>
+                        <td>
+                            <a href="{% url 'card:add_to_cart' order_item.item.barcode order_item.item.slug %}">artır</a>
+                            {{ order_item.quantity }}
+                            <a
+                                href="{% url 'card:remove_to_cart' order_item.item.barcode order_item.item.slug %}">eksilt</a>
+                        </td>
+                        <td><a href="{% url 'card:delete_to_cart' order_item.item.barcode order_item.item.slug %}">Ürünü Sil</a></td>
+                        <td>{{ order_item.get_total_item_price }} TL</td>
+
+                        {% empty %}
+                    <tr>
+                        <td colspan='5'>Your cart is empty</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="5"><b>Order Total</b></td>
+                        <td><b>{{ object.get_total }} TL</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <a style='padding-right:15px; margin-right:95px;' class='btn btn-warning float-end'
+                                href="{% url 'card:checkout' %}">Siparişi Tamamla</a>
+                            <a style='padding-right:15px; margin-left:55px;' class='btn btn-primary '
+                                href='{% url "product:product_list" %}'>Alışverişe Devam Et</a>
+                        </td>
+                    </tr>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</main>
+
+{% endblock content %}

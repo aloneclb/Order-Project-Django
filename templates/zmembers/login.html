@@ -1,0 +1,22 @@
+{% extends 'partials/_base.html' %}
+
+
+{% block content %}
+
+{% include 'partials/_messages.html' %}
+<h1 style='text-align: center; padding:40px;'>Giriş Yap</h1>
+
+<div style='width:600px; margin:auto;'>
+    <form method='POST'>
+
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <div style='text-align: center;'>
+            <input style='padding: 15px 50px;' type="submit" value='Giriş' class="btn btn-success">
+        </div>
+
+    </form>
+</div>
+
+{% endblock content %}
